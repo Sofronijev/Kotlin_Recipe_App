@@ -24,7 +24,7 @@ import coil.compose.AsyncImage
 import com.example.myrecipeapp.model.MealCategory
 
 @Composable
-fun CategoryItem(item: MealCategory) {
+fun CategoryItem(item: MealCategory, onNavigateToMeals: (String) -> Unit) {
 
     ElevatedCard(
         elevation = CardDefaults.elevatedCardElevation(
@@ -37,8 +37,7 @@ fun CategoryItem(item: MealCategory) {
     ) {
         Box(
             modifier = Modifier
-                .clickable { }
-
+                .clickable { onNavigateToMeals(item.strCategory) }
                 .background(
                     Brush.verticalGradient(
                         colors = listOf(Color.Transparent, Color(0xFF795548).copy(alpha = 0.5f)),

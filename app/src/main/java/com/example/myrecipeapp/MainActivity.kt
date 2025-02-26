@@ -11,8 +11,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
+import com.example.myrecipeapp.navigation.AppNavigation
 import com.example.myrecipeapp.network.KtorClient
-import com.example.myrecipeapp.screens.categories.CategoriesScreen
 import com.example.myrecipeapp.ui.theme.MyRecipeAppTheme
 import com.example.myrecipeapp.viewmodel.CategoriesViewModel
 
@@ -35,7 +35,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             MyRecipeAppTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    CategoriesScreen(viewModel, modifier = Modifier.padding(innerPadding))
+                    AppNavigation(viewModel, modifier = Modifier.padding(innerPadding), ktorClient)
                 }
             }
         }
