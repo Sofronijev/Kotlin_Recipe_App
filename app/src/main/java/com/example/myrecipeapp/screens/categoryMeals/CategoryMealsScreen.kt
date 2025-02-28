@@ -21,7 +21,8 @@ import com.example.myrecipeapp.viewmodel.CategoryMealsViewModel
 fun CategoryMealsScreen(
     modifier: Modifier = Modifier,
     ktorClient: KtorClient,
-    categoryName: String
+    categoryName: String,
+    navigateToMeal: (mealId: Int) -> Unit
 ) {
     // This is the way for the @Composable
     // Required to manually provide dependencies since ViewModel constructors cannot take parameters directly
@@ -32,7 +33,7 @@ fun CategoryMealsScreen(
         set(CategoryMealsViewModel.CATEGORY_NAME_KEY, categoryName)
     }
 
-// Needed because the default viewModel() function doesn’t support passing dependencies directly
+    // Needed because the default viewModel() function doesn’t support passing dependencies directly
     val viewModel: CategoryMealsViewModel = viewModel(
         factory = CategoryMealsViewModel.Factory, // Custom factory is required since ViewModel has constructor parameters
         extras = extras, // Supplies the necessary dependencies at creation time
@@ -58,7 +59,7 @@ fun CategoryMealsScreen(
             isLoading = isLoading,
             modifier = modifier,
             renderItem = { meal ->
-                MealItem(meal)
+                MealItem(meal, navigateToMeal)
             })
     }
 

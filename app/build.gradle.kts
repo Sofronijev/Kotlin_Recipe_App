@@ -68,6 +68,8 @@ dependencies {
 
     // For image loading from the web
     implementation(libs.coil.compose)
+    // For youtube player
+    implementation (libs.androidyoutubeplayer)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

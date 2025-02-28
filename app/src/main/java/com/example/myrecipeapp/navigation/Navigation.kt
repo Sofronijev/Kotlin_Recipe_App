@@ -9,10 +9,15 @@ import androidx.navigation.toRoute
 import com.example.myrecipeapp.network.KtorClient
 import com.example.myrecipeapp.screens.categories.CategoriesScreen
 import com.example.myrecipeapp.screens.categoryMeals.CategoryMealsScreen
+import com.example.myrecipeapp.screens.mealDetails.MealDetailsScreen
 import com.example.myrecipeapp.viewmodel.CategoriesViewModel
 
 @Composable
-fun AppNavigation(viewModel: CategoriesViewModel, modifier: Modifier = Modifier, ktorClient: KtorClient) {
+fun AppNavigation(
+    viewModel: CategoriesViewModel,
+    modifier: Modifier = Modifier,
+    ktorClient: KtorClient
+) {
     val navController = rememberNavController()
 
     NavHost(navController = navController, startDestination = Screen.CategoryScreen) {
@@ -23,10 +28,17 @@ fun AppNavigation(viewModel: CategoriesViewModel, modifier: Modifier = Modifier,
         }
         composable<Screen.CategoryMeals> {
             val args = it.toRoute<Screen.CategoryMeals>()
-            CategoryMealsScreen(modifier, ktorClient, args.categoryName)
+            CategoryMealsScreen(
+                modifier,
+                ktorClient,
+                args.categoryName,
+                navigateToMeal = { mealId ->
+                    navController.navigate(route = Screen.MealDetails(mealId))
+                })
         }
         composable<Screen.MealDetails> {
-
+            val args = it.toRoute<Screen.MealDetails>()
+            MealDetailsScreen(modifier, ktorClient, mealId = args.mealId)
         }
     }
 }

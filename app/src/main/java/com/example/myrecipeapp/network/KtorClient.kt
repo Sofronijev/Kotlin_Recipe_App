@@ -4,6 +4,8 @@ package com.example.myrecipeapp.network
 import com.example.myrecipeapp.model.CategoriesResponse
 import com.example.myrecipeapp.model.Meal
 import com.example.myrecipeapp.model.MealCategory
+import com.example.myrecipeapp.model.MealDetail
+import com.example.myrecipeapp.model.MealDetailsResponse
 import com.example.myrecipeapp.model.MealResponse
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -42,5 +44,9 @@ class KtorClient {
 
     suspend fun getMealsByCategory(categoryName: String): List<Meal> {
         return client.get("filter.php?c=$categoryName").body<MealResponse>().meals
+    }
+
+    suspend fun getMealDetails(mealId: Int): MealDetail? {
+        return client.get("lookup.php?i=$mealId").body<MealDetailsResponse>().meals.firstOrNull()
     }
 }

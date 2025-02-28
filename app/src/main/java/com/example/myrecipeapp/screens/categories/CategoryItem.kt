@@ -7,7 +7,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,8 +22,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.AsyncImage
+import coil.compose.SubcomposeAsyncImage
 import com.example.myrecipeapp.model.MealCategory
+import com.example.myrecipeapp.ui.theme.Brown
 
 @Composable
 fun CategoryItem(item: MealCategory, onNavigateToMeals: (String) -> Unit) {
@@ -40,17 +43,26 @@ fun CategoryItem(item: MealCategory, onNavigateToMeals: (String) -> Unit) {
                 .clickable { onNavigateToMeals(item.strCategory) }
                 .background(
                     Brush.verticalGradient(
-                        colors = listOf(Color.Transparent, Color(0xFF795548).copy(alpha = 0.5f)),
+                        colors = listOf(Color.Transparent, Brown.copy(alpha = 0.5f)),
                         startY = 20f // Adjust fade start position
                     )
                 )
 
         ) {
-            AsyncImage(
+            SubcomposeAsyncImage(
                 model = item.strCategoryThumb,
                 contentDescription = "${item.strCategory} image",
                 modifier = Modifier.fillMaxSize(),
-                contentScale = ContentScale.FillHeight
+                contentScale = ContentScale.FillHeight,
+                loading = {
+                    CircularProgressIndicator(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .wrapContentSize(),
+                        color = Brown
+
+                    )
+                }
             )
 
             Text(
