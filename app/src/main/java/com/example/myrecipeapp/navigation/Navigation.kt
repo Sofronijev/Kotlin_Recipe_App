@@ -20,24 +20,24 @@ fun AppNavigation(
 ) {
     val navController = rememberNavController()
 
-    NavHost(navController = navController, startDestination = Screen.CategoryScreen) {
-        composable<Screen.CategoryScreen> {
+    NavHost(navController = navController, startDestination = NavRoutes.CategoryScreen) {
+        composable<NavRoutes.CategoryScreen> {
             CategoriesScreen(viewModel, modifier, onNavigateToMeals = { categoryName ->
-                navController.navigate(route = Screen.CategoryMeals(categoryName))
+                navController.navigate(route = NavRoutes.CategoryMeals(categoryName))
             })
         }
-        composable<Screen.CategoryMeals> {
-            val args = it.toRoute<Screen.CategoryMeals>()
+        composable<NavRoutes.CategoryMeals> {
+            val args = it.toRoute<NavRoutes.CategoryMeals>()
             CategoryMealsScreen(
                 modifier,
                 ktorClient,
                 args.categoryName,
                 navigateToMeal = { mealId ->
-                    navController.navigate(route = Screen.MealDetails(mealId))
+                    navController.navigate(route = NavRoutes.MealDetails(mealId))
                 })
         }
-        composable<Screen.MealDetails> {
-            val args = it.toRoute<Screen.MealDetails>()
+        composable<NavRoutes.MealDetails> {
+            val args = it.toRoute<NavRoutes.MealDetails>()
             MealDetailsScreen(modifier, ktorClient, mealId = args.mealId)
         }
     }

@@ -2,7 +2,7 @@ package com.example.myrecipeapp.navigation
 
 import kotlinx.serialization.Serializable
 
-sealed class Screen() {
+object NavRoutes {
     @Serializable
     data object CategoryScreen
     @Serializable
