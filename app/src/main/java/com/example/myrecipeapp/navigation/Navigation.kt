@@ -34,11 +34,19 @@ fun AppNavigation(
                 args.categoryName,
                 navigateToMeal = { mealId ->
                     navController.navigate(route = NavRoutes.MealDetails(mealId))
-                })
+                },
+                backToCategories = { navController.popBackStack() }
+            )
+
         }
         composable<NavRoutes.MealDetails> {
             val args = it.toRoute<NavRoutes.MealDetails>()
-            MealDetailsScreen(modifier, ktorClient, mealId = args.mealId)
+            MealDetailsScreen(
+                modifier,
+                ktorClient,
+                mealId = args.mealId,
+                backToMeals = { navController.popBackStack() }
+            )
         }
     }
 }

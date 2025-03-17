@@ -1,18 +1,16 @@
 package com.example.myrecipeapp.screens.categoryMeals
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Text
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.MutableCreationExtras
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.myrecipeapp.components.Header
 import com.example.myrecipeapp.components.ListContainer
 import com.example.myrecipeapp.network.KtorClient
 import com.example.myrecipeapp.viewmodel.CategoryMealsViewModel
@@ -22,7 +20,8 @@ fun CategoryMealsScreen(
     modifier: Modifier = Modifier,
     ktorClient: KtorClient,
     categoryName: String,
-    navigateToMeal: (mealId: Int) -> Unit
+    navigateToMeal: (mealId: Int) -> Unit,
+    backToCategories: () -> Unit,
 ) {
     // This is the way for the @Composable
     // Required to manually provide dependencies since ViewModel constructors cannot take parameters directly
@@ -44,23 +43,22 @@ fun CategoryMealsScreen(
     val error by viewModel.error.collectAsState()
     val meals by viewModel.meals.collectAsState()
 
-    Column(modifier = modifier.padding(horizontal = 16.dp)) {
-        Text(
-            text = categoryName,
+    Scaffold(
+        topBar = { Header(text = categoryName, onBack = backToCategories) }
+    ) { innerPadding ->
+        Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 40.dp, bottom = 4.dp),
-            fontSize = 24.sp,
-            fontWeight = FontWeight.Bold,
-        )
-        ListContainer(
-            data = meals,
-            error = error,
-            isLoading = isLoading,
-            modifier = modifier,
-            renderItem = { meal ->
-                MealItem(meal, navigateToMeal)
-            })
+                .padding(innerPadding)
+                .padding(horizontal = 16.dp)
+        ) {
+            ListContainer(
+                data = meals,
+                error = error,
+                isLoading = isLoading,
+                renderItem = { meal ->
+                    MealItem(meal, navigateToMeal)
+                })
+        }
     }
 
 }

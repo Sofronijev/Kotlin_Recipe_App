@@ -27,7 +27,7 @@ fun <T> ListContainer(
     when {
         isLoading -> {
             CircularProgressIndicator(
-                modifier = modifier
+                modifier = Modifier
                     .fillMaxSize()
                     .wrapContentSize()
             )
@@ -35,13 +35,13 @@ fun <T> ListContainer(
 
         error.isNotEmpty() -> {
             Box(
-                modifier = modifier
+                modifier = Modifier
                     .fillMaxSize(),
                 contentAlignment = Alignment.Center
             ) {
                 Text(
                     error,
-                    modifier
+                    Modifier
                         .fillMaxSize()
                         .wrapContentSize(Alignment.Center),
                     textAlign = TextAlign.Center
@@ -52,7 +52,7 @@ fun <T> ListContainer(
 
         data.isEmpty() && !isLoading -> {
             Box(
-                modifier = modifier
+                modifier = Modifier
                     .fillMaxSize(),
                 contentAlignment = Alignment.Center
             ) {
@@ -68,7 +68,7 @@ fun <T> ListContainer(
 
             LazyVerticalGrid(
                 columns = GridCells.Fixed(columns),
-                modifier = modifier.fillMaxSize(),
+                modifier = Modifier.fillMaxSize(),
                 contentPadding = PaddingValues(top = 16.dp)
             ) {
                 items(data) { item ->

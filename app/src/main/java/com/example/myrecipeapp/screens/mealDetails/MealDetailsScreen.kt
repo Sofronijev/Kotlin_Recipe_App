@@ -19,7 +19,12 @@ import com.example.myrecipeapp.network.KtorClient
 import com.example.myrecipeapp.viewmodel.MealViewModel
 
 @Composable
-fun MealDetailsScreen(modifier: Modifier, ktorClient: KtorClient, mealId: Int) {
+fun MealDetailsScreen(
+    modifier: Modifier,
+    ktorClient: KtorClient,
+    mealId: Int,
+    backToMeals: () -> Unit
+) {
     val extras = MutableCreationExtras().apply {
         set(MealViewModel.KTOR_CLIENT_KEY, ktorClient)
         set(MealViewModel.MEAL_ID_KEY, mealId)
@@ -37,7 +42,7 @@ fun MealDetailsScreen(modifier: Modifier, ktorClient: KtorClient, mealId: Int) {
     when {
         isLoading -> {
             CircularProgressIndicator(
-                modifier = modifier
+                modifier = Modifier
                     .fillMaxSize()
                     .wrapContentSize()
             )
@@ -45,12 +50,12 @@ fun MealDetailsScreen(modifier: Modifier, ktorClient: KtorClient, mealId: Int) {
 
         error.isNotEmpty() -> {
             Box(
-                modifier = modifier.fillMaxSize(),
+                modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
             ) {
                 Text(
                     error,
-                    modifier.wrapContentSize(Alignment.Center),
+                    Modifier.wrapContentSize(Alignment.Center),
                     textAlign = TextAlign.Center
                 )
             }
@@ -59,20 +64,20 @@ fun MealDetailsScreen(modifier: Modifier, ktorClient: KtorClient, mealId: Int) {
 
         meal == null -> {
             Box(
-                modifier = modifier
+                modifier = Modifier
                     .fillMaxSize(),
                 contentAlignment = Alignment.Center
             ) {
                 Text(
                     stringResource(R.string.meal_not_found),
-                    modifier.wrapContentSize(Alignment.Center),
+                    Modifier.wrapContentSize(Alignment.Center),
                     textAlign = TextAlign.Center
                 )
             }
         }
 
         else -> meal?.let {
-            MealDetailsContainer(it, modifier)
+            MealDetailsContainer(it, backToMeals)
         }
     }
 
