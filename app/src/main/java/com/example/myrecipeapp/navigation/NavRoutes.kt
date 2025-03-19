@@ -9,4 +9,7 @@ object NavRoutes {
     data class CategoryMeals(val categoryName: String)
     @Serializable
     data class MealDetails(val mealId: Int)
+
+    @Serializable
+    data object FavoriteScreen
 }

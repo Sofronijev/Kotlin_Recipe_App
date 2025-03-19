@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">MyRecipeApp</string>
-    <string name="categories_screen_title">Select meals category</string>
+    <string name="categories_screen_title">Meal Categories</string>
     <string name="meal_not_found">Meal not found</string>
     <string name="recipe">Recipe</string>
+    <string name="meals">Meals</string>
+    <string name="favorites">Favorites</string>
 </resources>
