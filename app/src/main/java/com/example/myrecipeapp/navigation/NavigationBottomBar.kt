@@ -1,10 +1,10 @@
 package com.example.myrecipeapp.navigation
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Fastfood
 import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.outlined.Fastfood
 import androidx.compose.material.icons.outlined.FavoriteBorder
-import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -38,10 +38,10 @@ fun NavigationBottomBar(navController: NavHostController) {
 
     val topLevelRoutes = listOf(
         TopLevelRoute(
-            stringResource(R.string.meals),
+            stringResource(R.string.categories),
             NavRoutes.CategoryScreen,
-            Icons.Outlined.Home,
-            Icons.Filled.Home
+            Icons.Outlined.Fastfood,
+            Icons.Filled.Fastfood
         ),
         TopLevelRoute(
             stringResource(R.string.favorites),

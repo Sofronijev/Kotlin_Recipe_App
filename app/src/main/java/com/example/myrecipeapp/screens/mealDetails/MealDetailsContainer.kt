@@ -34,13 +34,15 @@ import com.example.myrecipeapp.ui.theme.Brown
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun MealDetailsContainer(
-    meal: MealDetail, backToMeals: () -> Unit
+    meal: MealDetail,
+    backToMeals: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
 
     Scaffold(
         topBar = { Header(text = stringResource(R.string.recipe), onBack = backToMeals) }
     ) { innerPadding ->
-        Column(modifier = Modifier.padding(innerPadding)) {
+        Column(modifier = modifier.padding(top = innerPadding.calculateTopPadding())) {
             if (!meal.strYoutube.isNullOrBlank()) {
                 YoutubeVideoPlayer(meal.strYoutube)
             } else {
@@ -107,11 +109,13 @@ fun MealDetailsContainer(
                         Text(
                             text = measure,
                             fontWeight = FontWeight.Bold,
-                            modifier = Modifier.weight(1f)
+                            modifier = Modifier
+                                .weight(2f)
+                                .padding(end = 8.dp)
                         )
                         Text(
                             text = ingredient.replaceFirstChar { it.uppercase() },
-                            modifier = Modifier.weight(2f)
+                            modifier = Modifier.weight(3f)
                         )
                     }
                 }
@@ -119,8 +123,7 @@ fun MealDetailsContainer(
                     Text(
                         meal.strInstructions,
                         modifier = Modifier
-                            .padding(horizontal = 16.dp)
-                            .padding(top = 16.dp),
+                            .padding(16.dp)
                     )
                 }
             }

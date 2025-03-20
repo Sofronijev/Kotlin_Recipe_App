@@ -9,7 +9,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import com.example.myrecipeapp.R
 import com.example.myrecipeapp.components.Header
 import com.example.myrecipeapp.components.ListContainer
@@ -20,7 +19,6 @@ import com.example.myrecipeapp.viewmodel.CategoriesViewModel
 @Composable
 fun CategoriesScreen(
     viewModel: CategoriesViewModel,
-    // Will be used when bottomBar is placed
     modifier: Modifier = Modifier,
     onNavigateToMeals: (String) -> Unit
 ) {
@@ -30,11 +28,11 @@ fun CategoriesScreen(
         }
     ) { innerPadding ->
         Column(
-            modifier = Modifier
-                .padding(innerPadding)
-                .padding(horizontal = 16.dp)
+            modifier = modifier
+                // calculate Header padding
+                .padding(top = innerPadding.calculateTopPadding())
         ) {
-            CategoriesList(viewModel, modifier, onNavigateToMeals = onNavigateToMeals)
+            CategoriesList(viewModel, onNavigateToMeals = onNavigateToMeals)
         }
     }
 
@@ -43,7 +41,6 @@ fun CategoriesScreen(
 @Composable
 fun CategoriesList(
     viewModel: CategoriesViewModel,
-    modifier: Modifier = Modifier,
     onNavigateToMeals: (String) -> Unit
 ) {
     val categories by viewModel.categories.collectAsState()
@@ -55,7 +52,6 @@ fun CategoriesList(
         error = error,
         isLoading = isLoading,
         columns = 2,
-        modifier = modifier,
         renderItem = { category ->
             CategoryItem(category, onNavigateToMeals)
         })

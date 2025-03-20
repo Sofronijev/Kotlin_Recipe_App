@@ -77,7 +77,7 @@ fun MealDetailsScreen(
         }
 
         else -> meal?.let {
-            MealDetailsContainer(it, backToMeals)
+            MealDetailsContainer(it, backToMeals, modifier)
         }
     }
 

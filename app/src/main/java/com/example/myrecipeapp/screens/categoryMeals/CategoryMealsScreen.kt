@@ -1,6 +1,6 @@
 package com.example.myrecipeapp.screens.categoryMeals
 
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -46,9 +46,9 @@ fun CategoryMealsScreen(
     Scaffold(
         topBar = { Header(text = categoryName, onBack = backToCategories) }
     ) { innerPadding ->
-        Column(
-            modifier = Modifier
-                .padding(innerPadding)
+        Box(
+            modifier = modifier
+                .padding(top = innerPadding.calculateTopPadding())
                 .padding(horizontal = 16.dp)
         ) {
             ListContainer(

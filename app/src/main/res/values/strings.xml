@@ -3,6 +3,6 @@
     <string name="categories_screen_title">Meal Categories</string>
     <string name="meal_not_found">Meal not found</string>
     <string name="recipe">Recipe</string>
-    <string name="meals">Meals</string>
+    <string name="categories">Categories</string>
     <string name="favorites">Favorites</string>
 </resources>

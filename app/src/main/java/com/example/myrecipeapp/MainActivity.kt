@@ -52,13 +52,16 @@ fun App(
     val navController = rememberNavController()
 
     Scaffold(bottomBar = {
-       NavigationBottomBar(navController)
+        NavigationBottomBar(navController)
     }, modifier = Modifier.fillMaxSize()) { innerPadding ->
         AppNavigation(
             navController,
             viewModel,
-            modifier = Modifier.padding(innerPadding),
+            // Calculate NavigationBottomBar padding, for top it is calculated in screen that use Header
+            modifier = Modifier.padding(bottom = innerPadding.calculateBottomPadding()),
             ktorClient
         )
+
     }
 }
+

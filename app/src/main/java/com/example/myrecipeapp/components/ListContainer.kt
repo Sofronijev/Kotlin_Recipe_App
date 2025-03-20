@@ -21,7 +21,6 @@ fun <T> ListContainer(
     error: String,
     isLoading: Boolean,
     renderItem: @Composable (T) -> Unit,
-    modifier: Modifier = Modifier,
     columns: Int = 1,
 ) {
     when {
@@ -69,7 +68,7 @@ fun <T> ListContainer(
             LazyVerticalGrid(
                 columns = GridCells.Fixed(columns),
                 modifier = Modifier.fillMaxSize(),
-                contentPadding = PaddingValues(top = 16.dp)
+                contentPadding = PaddingValues(16.dp)
             ) {
                 items(data) { item ->
                     renderItem(item)
