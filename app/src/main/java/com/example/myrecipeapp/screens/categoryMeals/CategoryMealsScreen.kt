@@ -7,7 +7,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.MutableCreationExtras
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.myrecipeapp.components.Header
@@ -49,7 +48,6 @@ fun CategoryMealsScreen(
         Box(
             modifier = modifier
                 .padding(top = innerPadding.calculateTopPadding())
-                .padding(horizontal = 16.dp)
         ) {
             ListContainer(
                 data = meals,

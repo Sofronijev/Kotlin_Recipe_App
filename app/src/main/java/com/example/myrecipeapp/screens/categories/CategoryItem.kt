@@ -35,7 +35,6 @@ fun CategoryItem(item: MealCategory, onNavigateToMeals: (String) -> Unit) {
         ),
 
         modifier = Modifier
-            .padding(8.dp)
             .height(150.dp)
     ) {
         Box(
