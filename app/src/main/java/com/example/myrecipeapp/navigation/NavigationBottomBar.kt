@@ -1,5 +1,8 @@
 package com.example.myrecipeapp.navigation
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Fastfood
 import androidx.compose.material.icons.filled.Favorite
@@ -23,6 +26,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.myrecipeapp.R
 import com.example.myrecipeapp.ui.theme.Brown
 import com.example.myrecipeapp.ui.theme.LightBrown
+
 
 data class TopLevelRoute<T : Any>(
     val name: String,
@@ -59,39 +63,51 @@ fun NavigationBottomBar(navController: NavHostController) {
         indicatorColor = LightBrown,
     )
 
-    NavigationBar(containerColor = Brown) {
-        topLevelRoutes.forEach { screen ->
-            val isSelected = currentDestination?.hierarchy?.any {
-                it.hasRoute(screen.route::class)
-            } == true
-            NavigationBarItem(
-                icon = {
-                    Icon(
-                        imageVector = if (isSelected) screen.selectedIcon else screen.icon,
-                        contentDescription = screen.name,
-                    )
-                },
-                selected = isSelected,
-                onClick = {
-                    navController.navigate(screen.route) {
-                        // Pop up to the start destination of the graph to
-                        // avoid building up a large stack of destinations
-                        // on the back stack as users select items
-                        popUpTo(navController.graph.findStartDestination().id) {
-                            saveState = true
-                        }
-                        // Avoid multiple copies of the same destination when
-                        // reselecting the same item
-                        launchSingleTop = true
-                        // Restore state when reselecting a previously selected item
-                        restoreState = true
-                    }
-                },
-                colors = navItemColors,
-                label = { Text(screen.name) }
-            )
-        }
+    val showBottomAppBar = currentDestination?.hierarchy?.any {
+        it.hasRoute(topLevelRoutes[0].route::class) || it.hasRoute(topLevelRoutes[1].route::class)
+    } == true
 
+
+    AnimatedVisibility(
+        visible = showBottomAppBar,
+        enter = slideInVertically(initialOffsetY = { it }),
+        exit = slideOutVertically(targetOffsetY = { it }),
+    ) {
+        NavigationBar(containerColor = Brown) {
+            topLevelRoutes.forEach { screen ->
+                val isSelected = currentDestination?.hierarchy?.any {
+                    it.hasRoute(screen.route::class)
+                } == true
+                NavigationBarItem(
+                    icon = {
+                        Icon(
+                            imageVector = if (isSelected) screen.selectedIcon else screen.icon,
+                            contentDescription = screen.name,
+                        )
+                    },
+                    selected = isSelected,
+                    onClick = {
+                        navController.navigate(screen.route) {
+                            // Pop up to the start destination of the graph to
+                            // avoid building up a large stack of destinations
+                            // on the back stack as users select items
+                            popUpTo(navController.graph.findStartDestination().id) {
+                                saveState = true
+                            }
+                            // Avoid multiple copies of the same destination when
+                            // reselecting the same item
+                            launchSingleTop = true
+                            // Restore state when reselecting a previously selected item
+                            restoreState = true
+                        }
+                    },
+                    colors = navItemColors,
+                    label = { Text(screen.name) }
+                )
+            }
+
+        }
     }
+
 }
 

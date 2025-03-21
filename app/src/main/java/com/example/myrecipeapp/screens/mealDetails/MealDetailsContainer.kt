@@ -36,13 +36,17 @@ import com.example.myrecipeapp.ui.theme.Brown
 fun MealDetailsContainer(
     meal: MealDetail,
     backToMeals: () -> Unit,
-    modifier: Modifier = Modifier
 ) {
 
     Scaffold(
         topBar = { Header(text = stringResource(R.string.recipe), onBack = backToMeals) }
     ) { innerPadding ->
-        Column(modifier = modifier.padding(top = innerPadding.calculateTopPadding())) {
+        Column(
+            modifier = Modifier.padding(
+                top = innerPadding.calculateTopPadding(),
+                bottom = 16.dp
+            )
+        ) {
             if (!meal.strYoutube.isNullOrBlank()) {
                 YoutubeVideoPlayer(meal.strYoutube)
             } else {

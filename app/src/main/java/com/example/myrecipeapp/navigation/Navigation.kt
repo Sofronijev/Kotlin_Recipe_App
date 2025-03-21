@@ -1,7 +1,7 @@
 package com.example.myrecipeapp.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.Dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -17,19 +17,18 @@ import com.example.myrecipeapp.viewmodel.CategoriesViewModel
 fun AppNavigation(
     navController: NavHostController,
     viewModel: CategoriesViewModel,
-    modifier: Modifier = Modifier,
-    ktorClient: KtorClient
+    bottomNavPadding: Dp,
+    ktorClient: KtorClient,
 ) {
     NavHost(navController = navController, startDestination = NavRoutes.CategoryScreen) {
         composable<NavRoutes.CategoryScreen> {
-            CategoriesScreen(viewModel, modifier, onNavigateToMeals = { categoryName ->
+            CategoriesScreen(viewModel, bottomNavPadding, onNavigateToMeals = { categoryName ->
                 navController.navigate(route = NavRoutes.CategoryMeals(categoryName))
             })
         }
         composable<NavRoutes.CategoryMeals> {
             val args = it.toRoute<NavRoutes.CategoryMeals>()
             CategoryMealsScreen(
-                modifier,
                 ktorClient,
                 args.categoryName,
                 navigateToMeal = { mealId ->
@@ -42,7 +41,6 @@ fun AppNavigation(
         composable<NavRoutes.MealDetails> {
             val args = it.toRoute<NavRoutes.MealDetails>()
             MealDetailsScreen(
-                modifier,
                 ktorClient,
                 mealId = args.mealId,
                 backToMeals = { navController.popBackStack() }

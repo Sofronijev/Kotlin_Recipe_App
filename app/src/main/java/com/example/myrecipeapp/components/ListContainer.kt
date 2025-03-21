@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -23,6 +24,7 @@ fun <T> ListContainer(
     isLoading: Boolean,
     renderItem: @Composable (T) -> Unit,
     columns: Int = 1,
+    bottomNavPadding: Dp = 0.dp,
 ) {
     when {
         isLoading -> {
@@ -69,7 +71,12 @@ fun <T> ListContainer(
             LazyVerticalGrid(
                 columns = GridCells.Fixed(columns),
                 modifier = Modifier.fillMaxSize(),
-                contentPadding = PaddingValues(16.dp),
+                contentPadding = PaddingValues(
+                    start = 16.dp,
+                    end = 16.dp,
+                    top = 16.dp,
+                    bottom = bottomNavPadding + 16.dp
+                ),
                 verticalArrangement = Arrangement.spacedBy(8.dp),
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {

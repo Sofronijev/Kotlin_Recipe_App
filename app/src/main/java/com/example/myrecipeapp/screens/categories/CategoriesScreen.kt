@@ -9,6 +9,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.Dp
 import com.example.myrecipeapp.R
 import com.example.myrecipeapp.components.Header
 import com.example.myrecipeapp.components.ListContainer
@@ -19,7 +20,7 @@ import com.example.myrecipeapp.viewmodel.CategoriesViewModel
 @Composable
 fun CategoriesScreen(
     viewModel: CategoriesViewModel,
-    modifier: Modifier = Modifier,
+    bottomNavPadding: Dp,
     onNavigateToMeals: (String) -> Unit
 ) {
     Scaffold(
@@ -28,11 +29,11 @@ fun CategoriesScreen(
         }
     ) { innerPadding ->
         Column(
-            modifier = modifier
+            modifier = Modifier
                 // calculate Header padding
                 .padding(top = innerPadding.calculateTopPadding())
         ) {
-            CategoriesList(viewModel, onNavigateToMeals = onNavigateToMeals)
+            CategoriesList(viewModel, bottomNavPadding, onNavigateToMeals = onNavigateToMeals)
         }
     }
 
@@ -41,6 +42,7 @@ fun CategoriesScreen(
 @Composable
 fun CategoriesList(
     viewModel: CategoriesViewModel,
+    bottomNavPadding: Dp,
     onNavigateToMeals: (String) -> Unit
 ) {
     val categories by viewModel.categories.collectAsState()
@@ -54,6 +56,8 @@ fun CategoriesList(
         columns = 2,
         renderItem = { category ->
             CategoryItem(category, onNavigateToMeals)
-        })
+        },
+        bottomNavPadding = bottomNavPadding
+    )
 
 }

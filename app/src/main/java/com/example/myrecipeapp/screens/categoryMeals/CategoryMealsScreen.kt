@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.MutableCreationExtras
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.myrecipeapp.components.Header
@@ -16,7 +17,6 @@ import com.example.myrecipeapp.viewmodel.CategoryMealsViewModel
 
 @Composable
 fun CategoryMealsScreen(
-    modifier: Modifier = Modifier,
     ktorClient: KtorClient,
     categoryName: String,
     navigateToMeal: (mealId: Int) -> Unit,
@@ -46,8 +46,8 @@ fun CategoryMealsScreen(
         topBar = { Header(text = categoryName, onBack = backToCategories) }
     ) { innerPadding ->
         Box(
-            modifier = modifier
-                .padding(top = innerPadding.calculateTopPadding())
+            modifier = Modifier
+                .padding(top = innerPadding.calculateTopPadding(), bottom = 16.dp)
         ) {
             ListContainer(
                 data = meals,

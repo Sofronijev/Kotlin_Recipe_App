@@ -6,7 +6,6 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -58,7 +57,7 @@ fun App(
             navController,
             viewModel,
             // Calculate NavigationBottomBar padding, for top it is calculated in screen that use Header
-            modifier = Modifier.padding(bottom = innerPadding.calculateBottomPadding()),
+            bottomNavPadding = innerPadding.calculateBottomPadding(),
             ktorClient
         )
 

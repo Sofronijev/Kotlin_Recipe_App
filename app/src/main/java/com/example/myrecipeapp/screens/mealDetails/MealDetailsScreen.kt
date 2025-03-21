@@ -20,7 +20,6 @@ import com.example.myrecipeapp.viewmodel.MealViewModel
 
 @Composable
 fun MealDetailsScreen(
-    modifier: Modifier,
     ktorClient: KtorClient,
     mealId: Int,
     backToMeals: () -> Unit
@@ -77,7 +76,7 @@ fun MealDetailsScreen(
         }
 
         else -> meal?.let {
-            MealDetailsContainer(it, backToMeals, modifier)
+            MealDetailsContainer(it, backToMeals)
         }
     }
 
