@@ -12,11 +12,18 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.outlined.FavoriteBorder
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -30,16 +37,47 @@ import com.example.myrecipeapp.components.Header
 import com.example.myrecipeapp.components.YoutubeVideoPlayer
 import com.example.myrecipeapp.model.MealDetail
 import com.example.myrecipeapp.ui.theme.Brown
+import com.example.myrecipeapp.viewmodel.FavoriteViewModel
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun MealDetailsContainer(
     meal: MealDetail,
+    favoriteViewModel: FavoriteViewModel,
     backToMeals: () -> Unit,
 ) {
+    val isFavorite by favoriteViewModel.isMealFavorite(meal.idMeal).collectAsState(initial = false)
 
     Scaffold(
-        topBar = { Header(text = stringResource(R.string.recipe), onBack = backToMeals) }
+        topBar = {
+            Header(
+                text = stringResource(R.string.recipe),
+                onBack = backToMeals,
+                rightIcon = {
+                    IconButton(onClick = {
+                        if (isFavorite) {
+                            favoriteViewModel.deleteMealFromFavorites(
+                                meal.idMeal.toInt(),
+
+                                )
+                        } else {
+                            favoriteViewModel.addMealToFavorites(
+                                meal.idMeal.toInt(),
+                                meal.strMeal,
+                                meal.strMealThumb
+                            )
+                        }
+
+                    }) {
+                        Icon(
+                            imageVector = if (isFavorite) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
+                            contentDescription = "favoriteIcon",
+                            tint = Color.White,
+                        )
+                    }
+                }
+            )
+        }
     ) { innerPadding ->
         Column(
             modifier = Modifier.padding(
@@ -70,6 +108,7 @@ fun MealDetailsContainer(
                         fontSize = 24.sp,
                         fontWeight = FontWeight.Bold
                     )
+                    Text(isFavorite.toString())
                 }
 
                 item {

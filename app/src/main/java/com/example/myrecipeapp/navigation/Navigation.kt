@@ -12,6 +12,7 @@ import com.example.myrecipeapp.screens.categoryMeals.CategoryMealsScreen
 import com.example.myrecipeapp.screens.favorites.FavoritesScreen
 import com.example.myrecipeapp.screens.mealDetails.MealDetailsScreen
 import com.example.myrecipeapp.viewmodel.CategoriesViewModel
+import com.example.myrecipeapp.viewmodel.FavoriteViewModel
 
 @Composable
 fun AppNavigation(
@@ -19,6 +20,7 @@ fun AppNavigation(
     viewModel: CategoriesViewModel,
     bottomNavPadding: Dp,
     ktorClient: KtorClient,
+    favoriteViewModel: FavoriteViewModel
 ) {
     NavHost(navController = navController, startDestination = NavRoutes.CategoryScreen) {
         composable<NavRoutes.CategoryScreen> {
@@ -42,6 +44,7 @@ fun AppNavigation(
             val args = it.toRoute<NavRoutes.MealDetails>()
             MealDetailsScreen(
                 ktorClient,
+                favoriteViewModel,
                 mealId = args.mealId,
                 backToMeals = { navController.popBackStack() }
             )
@@ -50,7 +53,7 @@ fun AppNavigation(
 //            CategoriesScreen(viewModel, modifier, onNavigateToMeals = { categoryName ->
 //                navController.navigate(route = NavRoutes.CategoryMeals(categoryName))
 //            })
-            FavoritesScreen()
+            FavoritesScreen(favoriteViewModel)
         }
     }
 }

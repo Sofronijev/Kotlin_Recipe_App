@@ -16,11 +16,13 @@ import androidx.lifecycle.viewmodel.MutableCreationExtras
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.myrecipeapp.R
 import com.example.myrecipeapp.network.KtorClient
+import com.example.myrecipeapp.viewmodel.FavoriteViewModel
 import com.example.myrecipeapp.viewmodel.MealViewModel
 
 @Composable
 fun MealDetailsScreen(
     ktorClient: KtorClient,
+    favoriteViewModel: FavoriteViewModel,
     mealId: Int,
     backToMeals: () -> Unit
 ) {
@@ -76,7 +78,11 @@ fun MealDetailsScreen(
         }
 
         else -> meal?.let {
-            MealDetailsContainer(it, backToMeals)
+            MealDetailsContainer(
+                it,
+                favoriteViewModel,
+                backToMeals
+            )
         }
     }
 

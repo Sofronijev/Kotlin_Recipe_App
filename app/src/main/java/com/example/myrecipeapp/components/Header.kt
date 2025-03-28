@@ -16,7 +16,7 @@ import com.example.myrecipeapp.ui.theme.Brown
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Header(text: String = "", onBack: (() -> Unit)? = null) {
+fun Header(text: String = "", onBack: (() -> Unit)? = null, rightIcon: @Composable() (() -> Unit?)? = null) {
     CenterAlignedTopAppBar(
         colors = topAppBarColors(
             containerColor = Brown,
@@ -40,6 +40,12 @@ fun Header(text: String = "", onBack: (() -> Unit)? = null) {
                 }
             }
 
+        },
+        actions = {
+            if (rightIcon != null) {
+              rightIcon()
+            }
         }
+
     )
 }

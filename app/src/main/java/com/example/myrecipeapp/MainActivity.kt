@@ -12,15 +12,26 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.navigation.compose.rememberNavController
+import androidx.room.Room
+import com.example.myrecipeapp.local.db.FavoriteMealsDatabase
 import com.example.myrecipeapp.navigation.AppNavigation
 import com.example.myrecipeapp.navigation.NavigationBottomBar
 import com.example.myrecipeapp.network.KtorClient
 import com.example.myrecipeapp.ui.theme.MyRecipeAppTheme
 import com.example.myrecipeapp.viewmodel.CategoriesViewModel
+import com.example.myrecipeapp.viewmodel.FavoriteViewModel
 
 
 class MainActivity : ComponentActivity() {
     private val ktorClient = KtorClient()
+
+
+    private val db by lazy {
+        Room.databaseBuilder(
+            applicationContext,
+            FavoriteMealsDatabase::class.java, "favorite-meals"
+        ).build()
+    }
 
     // Automatically creates and provides a ViewModel instance
     private val viewModel: CategoriesViewModel by viewModels {
@@ -31,12 +42,25 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    private val favoriteViewModel: FavoriteViewModel by viewModels {
+        // Uses a factory to create the ViewModel since it requires dependencies
+        viewModelFactory {
+            // Defines how to initialize the ViewModel (passes ktorClient)
+            initializer { FavoriteViewModel(db.favoriteMealDao()) }
+        }
+    }
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             MyRecipeAppTheme {
-                App(viewModel, ktorClient)
+                App(
+                    viewModel,
+                    ktorClient,
+                    favoriteViewModel
+                )
             }
         }
     }
@@ -47,6 +71,7 @@ class MainActivity : ComponentActivity() {
 fun App(
     viewModel: CategoriesViewModel,
     ktorClient: KtorClient,
+    favoriteViewModel: FavoriteViewModel
 ) {
     val navController = rememberNavController()
 
@@ -58,7 +83,8 @@ fun App(
             viewModel,
             // Calculate NavigationBottomBar padding, for top it is calculated in screen that use Header
             bottomNavPadding = innerPadding.calculateBottomPadding(),
-            ktorClient
+            ktorClient,
+            favoriteViewModel
         )
 
     }
