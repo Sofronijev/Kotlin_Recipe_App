@@ -108,7 +108,6 @@ fun MealDetailsContainer(
                         fontSize = 24.sp,
                         fontWeight = FontWeight.Bold
                     )
-                    Text(isFavorite.toString())
                 }
 
                 item {

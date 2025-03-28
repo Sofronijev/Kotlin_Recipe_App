@@ -53,7 +53,9 @@ fun AppNavigation(
 //            CategoriesScreen(viewModel, modifier, onNavigateToMeals = { categoryName ->
 //                navController.navigate(route = NavRoutes.CategoryMeals(categoryName))
 //            })
-            FavoritesScreen(favoriteViewModel)
+            FavoritesScreen(favoriteViewModel, bottomNavPadding, navigateToMeal = { mealId ->
+                navController.navigate(route = NavRoutes.MealDetails(mealId))
+            },)
         }
     }
 }
